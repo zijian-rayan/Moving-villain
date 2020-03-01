@@ -127,13 +127,13 @@ HRESULT CMyD3DApplication::InitDeviceObjects()
 
     m_pFont->InitDeviceObjects( m_pd3dDevice );
     D3DXCreateTeapot( m_pd3dDevice, &m_pD3DXMesh, NULL );
-	
-  tinyModel=new CModel(m_pd3dDevice, _T("tiny.x"));
-  isStart=false;
-  isForward=true;
-  posTiny=0;
-  periodAnim=0;
-  tinyModel->SetTime(0);
+//---------*******----------*********---------*****-----	
+tinyModel=new CModel(m_pd3dDevice, _T("tiny.x"));
+isStart=false;
+isForward=true;
+posTiny=0;
+periodAnim=0;
+tinyModel->SetTime(0);
 
 		roomFile->Create(m_pd3dDevice,_T("droidroom.x"));
 		car1->Create(m_pd3dDevice,_T("audi-a2.x"));
@@ -155,7 +155,8 @@ HRESULT CMyD3DApplication::DeleteDeviceObjects()
 	roomFile->Destroy();
 	car1->Destroy();
 	car2->Destroy();
-	delete tinyModel;
+//---------*******----------*********---------*****-----	
+delete tinyModel;
     return S_OK;
 }
 
@@ -417,10 +418,11 @@ HRESULT CMyD3DApplication::Render()
 			m_pd3dDevice->LightEnable( 1, TRUE );
 			
 			m_pd3dDevice->LightEnable( 2, TRUE );
-			D3DXMATRIX matScaleRoom,matTransRoom;
-			D3DXMatrixScaling(&matScaleRoom,0.004f,0.004f,0.0081f);
-			D3DXMatrixTranslation(&matTransRoom,0.0f,14.5,0);
-			D3DXMatrixMultiply(&mat_room,&matScaleRoom,&matTransRoom); 
+//---------*******----------*********---------*****-----	
+D3DXMATRIX matScaleRoom,matTransRoom;
+D3DXMatrixScaling(&matScaleRoom,0.004f,0.004f,0.0081f);
+D3DXMatrixTranslation(&matTransRoom,0.0f,14.5,0);
+D3DXMatrixMultiply(&mat_room,&matScaleRoom,&matTransRoom); 
 			m_pd3dDevice->SetTransform( D3DTS_WORLD,  &mat_room);
 
 			roomFile->Render(m_pd3dDevice,&mat_room);
@@ -439,7 +441,7 @@ HRESULT CMyD3DApplication::Render()
 			// End the scene.
 		}
 
-
+//---------*******----------*********---------*****-----	
 		if(isStart==true)
 		{
 		  tinyModel->SetCurrentAnimation(0);
@@ -459,7 +461,6 @@ HRESULT CMyD3DApplication::Render()
 		D3DXMatrixMultiply(&mat_tiny,&matScaleTiny,&matTransTiny); 
 		m_pd3dDevice->SetTransform( D3DTS_WORLD,  &mat_tiny);
 		tinyModel->Draw();
-
         m_pd3dDevice->EndScene();
     }
 	
@@ -576,7 +577,7 @@ LRESULT CMyD3DApplication::MsgProc( HWND hWnd, UINT msg, WPARAM wParam,
 			  switch (wParam)
 			  {
 			  case VK_SPACE: isStart=!isStart; break;
-			  case VK_BACK:isForward=!isForward; break;
+			  case VK_BACK:isForward=!isForward; break;//VK_OEM_102
 			  case 'R':
 				tinyModel->SetTime(0);
 				tinyModel->SetCurrentAnimation();
